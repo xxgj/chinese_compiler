@@ -25,13 +25,13 @@ func main() {
 	flag.Parse()
 	code, err := ioutil.ReadFile(flagIn)
 	if err != nil {
-		fmt.Println("read fail", err)
+		fmt.Println("读文件出错", err)
 		return
 	}
 	if flagOut != "" {
 		f, err := os.OpenFile(flagOut, os.O_WRONLY|os.O_CREATE|os.O_SYNC|os.O_APPEND, 0777)
 		if err != nil {
-			fmt.Println("write fail", err)
+			fmt.Println("写文件出错", err)
 			return
 		}
 		os.Stdout = f

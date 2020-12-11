@@ -21,10 +21,10 @@ func NewTry(pos PositionHolder, try Node, catcher string, catch Node, finally No
 
 func (n *Try) dump(w io.Writer, nest int) {
 	header(n, w, nest, true)
-	tag("Try", w, nest+1)
+	tag("尝试", w, nest+1)
 	dumpNode(n.Try, w, nest+2)
-	tag(fmt.Sprintf("Catch: %s", n.Catcher), w, nest+1)
+	tag(fmt.Sprintf("捕捉: %s", n.Catcher), w, nest+1)
 	dumpNode(n.Catch, w, nest+2)
-	tag("Finally", w, nest+1)
+	tag("最后执行", w, nest+1)
 	dumpNode(n.Finally, w, nest+2)
 }

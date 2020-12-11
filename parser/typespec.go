@@ -19,9 +19,3 @@ func newTypeSpec(base baseType) *TypeSpec {
 }
 
 type subtype_t interface{}
-
-/*
-type funcSubType struct {
-	params []param_t
-}
-*/

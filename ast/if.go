@@ -21,7 +21,7 @@ func (n *If) dump(w io.Writer, nest int) {
 	header(n, w, nest, true)
 	tag("条件", w, nest+1)
 	dumpNode(n.Test, w, nest+2)
-	tag("循环体", w, nest+1)
+	tag("执行块", w, nest+1)
 	dumpNode(n.Body, w, nest+2)
 	tag("后续", w, nest+1)
 	dumpNode(n.Alt, w, nest+2)
