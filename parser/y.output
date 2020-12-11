@@ -1,0 +1,2084 @@
+
+state 0
+	$accept: .trans_unit $end 
+	opt_label: .    (37)
+
+	kIF  shift 7
+	kRETURN  shift 9
+	kBREAK  shift 10
+	kCONTINUE  shift 11
+	kTRUE  shift 29
+	kFALSE  shift 30
+	kTRY  shift 12
+	kTHROW  shift 13
+	kBOOLEAN  shift 14
+	kINT  shift 15
+	kDOUBLE  shift 16
+	kSTRING  shift 17
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 19
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  reduce 37 (src line 216)
+
+	stmt  goto 4
+	expr  goto 6
+	assign  goto 18
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+	opt_label  goto 8
+	type_spec  goto 5
+	trans_unit  goto 1
+	def_or_stmt  goto 2
+	def_func  goto 3
+
+state 1
+	$accept:  trans_unit.$end 
+	trans_unit:  trans_unit.def_or_stmt 
+	opt_label: .    (37)
+
+	$end  accept
+	kIF  shift 7
+	kRETURN  shift 9
+	kBREAK  shift 10
+	kCONTINUE  shift 11
+	kTRUE  shift 29
+	kFALSE  shift 30
+	kTRY  shift 12
+	kTHROW  shift 13
+	kBOOLEAN  shift 14
+	kINT  shift 15
+	kDOUBLE  shift 16
+	kSTRING  shift 17
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 19
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  reduce 37 (src line 216)
+
+	stmt  goto 4
+	expr  goto 6
+	assign  goto 18
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+	opt_label  goto 8
+	type_spec  goto 5
+	def_or_stmt  goto 37
+	def_func  goto 3
+
+state 2
+	trans_unit:  def_or_stmt.    (1)
+
+	.  reduce 1 (src line 83)
+
+
+state 3
+	def_or_stmt:  def_func.    (3)
+
+	.  reduce 3 (src line 86)
+
+
+state 4
+	def_or_stmt:  stmt.    (4)
+
+	.  reduce 4 (src line 87)
+
+
+state 5
+	def_func:  type_spec.tIDENT '（' params '）' block 
+	def_func:  type_spec.tIDENT '（' '）' block 
+	def_func:  type_spec.tIDENT '（' params '）' '。' 
+	def_func:  type_spec.tIDENT '（' '）' '。' 
+	stmt:  type_spec.tIDENT '。' 
+	stmt:  type_spec.tIDENT tIS expr '。' 
+
+	tIDENT  shift 38
+	.  error
+
+
+state 6
+	stmt:  expr.'。' 
+	expr:  expr.'，' assign 
+
+	'。'  shift 39
+	'，'  shift 40
+	.  error
+
+
+state 7
+	stmt:  kIF.'（' expr '）' block if_tail 
+
+	'（'  shift 41
+	.  error
+
+
+state 8
+	stmt:  opt_label.kWHILE '（' expr '）' block 
+	stmt:  opt_label.kFOR '（' opt_expr '；' opt_expr '；' opt_expr '）' block 
+	stmt:  opt_label.kFOREACH '（' tIDENT '：' expr '）' block 
+
+	kWHILE  shift 42
+	kFOR  shift 43
+	kFOREACH  shift 44
+	.  error
+
+
+state 9
+	stmt:  kRETURN.opt_expr '。' 
+	opt_expr: .    (39)
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  reduce 39 (src line 225)
+
+	opt_expr  goto 45
+	expr  goto 46
+	assign  goto 18
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 10
+	stmt:  kBREAK.opt_ident '。' 
+	opt_ident: .    (41)
+
+	tIDENT  shift 49
+	.  reduce 41 (src line 231)
+
+	opt_ident  goto 48
+
+state 11
+	stmt:  kCONTINUE.opt_ident '。' 
+	opt_ident: .    (41)
+
+	tIDENT  shift 49
+	.  reduce 41 (src line 231)
+
+	opt_ident  goto 50
+
+state 12
+	stmt:  kTRY.block kCATCH '（' tIDENT '）' block 
+	stmt:  kTRY.block kFINALLY block 
+	stmt:  kTRY.block kCATCH '（' tIDENT '）' block kFINALLY block 
+
+	'【'  shift 53
+	.  error
+
+	block_beg  goto 52
+	block  goto 51
+
+state 13
+	stmt:  kTHROW.expr '。' 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	expr  goto 54
+	assign  goto 18
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 14
+	type_spec:  kBOOLEAN.    (5)
+
+	.  reduce 5 (src line 92)
+
+
+state 15
+	type_spec:  kINT.    (6)
+
+	.  reduce 6 (src line 93)
+
+
+state 16
+	type_spec:  kDOUBLE.    (7)
+
+	.  reduce 7 (src line 94)
+
+
+state 17
+	type_spec:  kSTRING.    (8)
+
+	.  reduce 8 (src line 95)
+
+
+state 18
+	expr:  assign.    (43)
+
+	.  reduce 43 (src line 240)
+
+
+state 19
+	opt_label:  tIDENT.'：' 
+	primary:  tIDENT.    (80)
+
+	'：'  shift 55
+	.  reduce 80 (src line 368)
+
+
+state 20
+	assign:  log_or.    (45)
+	log_or:  log_or.tLOG_OR log_and 
+
+	tLOG_OR  shift 56
+	.  reduce 45 (src line 246)
+
+
+state 21
+	assign:  postfix.tIS assign 
+	assign:  postfix.tADD_A assign 
+	assign:  postfix.tSUB_A assign 
+	assign:  postfix.tMUL_A assign 
+	assign:  postfix.tDIV_A assign 
+	assign:  postfix.tMOD_A assign 
+	unary:  postfix.    (71)
+	postfix:  postfix.'（' '）' 
+	postfix:  postfix.'（' args '）' 
+	postfix:  postfix.tINC 
+	postfix:  postfix.tDEC 
+
+	tIS  shift 57
+	tADD_A  shift 58
+	tSUB_A  shift 59
+	tMUL_A  shift 60
+	tDIV_A  shift 61
+	tMOD_A  shift 62
+	tINC  shift 64
+	tDEC  shift 65
+	'（'  shift 63
+	.  reduce 71 (src line 336)
+
+
+state 22
+	log_or:  log_and.    (52)
+	log_and:  log_and.tLOG_AND equality 
+
+	tLOG_AND  shift 66
+	.  reduce 52 (src line 272)
+
+
+state 23
+	postfix:  primary.    (74)
+
+	.  reduce 74 (src line 346)
+
+
+state 24
+	log_and:  equality.    (54)
+	equality:  equality.tEQ relational 
+	equality:  equality.tNE relational 
+
+	tEQ  shift 67
+	tNE  shift 68
+	.  reduce 54 (src line 278)
+
+
+state 25
+	primary:  '（'.expr '）' 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	expr  goto 69
+	assign  goto 18
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 26
+	primary:  tINT_LITERAL.    (81)
+
+	.  reduce 81 (src line 372)
+
+
+state 27
+	primary:  tDOUBLE_LITERAL.    (82)
+
+	.  reduce 82 (src line 376)
+
+
+state 28
+	primary:  tSTRING_LITERAL.    (83)
+
+	.  reduce 83 (src line 380)
+
+
+state 29
+	primary:  kTRUE.    (84)
+
+	.  reduce 84 (src line 384)
+
+
+state 30
+	primary:  kFALSE.    (85)
+
+	.  reduce 85 (src line 388)
+
+
+state 31
+	equality:  relational.    (56)
+	relational:  relational.'《' additive 
+	relational:  relational.'》' additive 
+	relational:  relational.tGE additive 
+	relational:  relational.tLE additive 
+
+	tGE  shift 72
+	tLE  shift 73
+	'《'  shift 70
+	'》'  shift 71
+	.  reduce 56 (src line 284)
+
+
+state 32
+	relational:  additive.    (59)
+	additive:  additive.'+' multive 
+	additive:  additive.'-' multive 
+
+	'+'  shift 74
+	'-'  shift 75
+	.  reduce 59 (src line 294)
+
+
+state 33
+	additive:  multive.    (64)
+	multive:  multive.'*' unary 
+	multive:  multive.'/' unary 
+	multive:  multive.'%' unary 
+
+	'*'  shift 76
+	'/'  shift 77
+	'%'  shift 78
+	.  reduce 64 (src line 312)
+
+
+state 34
+	multive:  unary.    (67)
+
+	.  reduce 67 (src line 322)
+
+
+state 35
+	unary:  '-'.unary 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	unary  goto 79
+	postfix  goto 80
+	primary  goto 23
+
+state 36
+	unary:  '！'.unary 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	unary  goto 81
+	postfix  goto 80
+	primary  goto 23
+
+state 37
+	trans_unit:  trans_unit def_or_stmt.    (2)
+
+	.  reduce 2 (src line 84)
+
+
+state 38
+	def_func:  type_spec tIDENT.'（' params '）' block 
+	def_func:  type_spec tIDENT.'（' '）' block 
+	def_func:  type_spec tIDENT.'（' params '）' '。' 
+	def_func:  type_spec tIDENT.'（' '）' '。' 
+	stmt:  type_spec tIDENT.'。' 
+	stmt:  type_spec tIDENT.tIS expr '。' 
+
+	tIS  shift 84
+	'。'  shift 83
+	'（'  shift 82
+	.  error
+
+
+state 39
+	stmt:  expr '。'.    (20)
+
+	.  reduce 20 (src line 146)
+
+
+state 40
+	expr:  expr '，'.assign 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	assign  goto 85
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 41
+	stmt:  kIF '（'.expr '）' block if_tail 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	expr  goto 86
+	assign  goto 18
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 42
+	stmt:  opt_label kWHILE.'（' expr '）' block 
+
+	'（'  shift 87
+	.  error
+
+
+state 43
+	stmt:  opt_label kFOR.'（' opt_expr '；' opt_expr '；' opt_expr '）' block 
+
+	'（'  shift 88
+	.  error
+
+
+state 44
+	stmt:  opt_label kFOREACH.'（' tIDENT '：' expr '）' block 
+
+	'（'  shift 89
+	.  error
+
+
+state 45
+	stmt:  kRETURN opt_expr.'。' 
+
+	'。'  shift 90
+	.  error
+
+
+state 46
+	opt_expr:  expr.    (40)
+	expr:  expr.'，' assign 
+
+	'，'  shift 40
+	.  reduce 40 (src line 229)
+
+
+state 47
+	primary:  tIDENT.    (80)
+
+	.  reduce 80 (src line 368)
+
+
+state 48
+	stmt:  kBREAK opt_ident.'。' 
+
+	'。'  shift 91
+	.  error
+
+
+state 49
+	opt_ident:  tIDENT.    (42)
+
+	.  reduce 42 (src line 235)
+
+
+state 50
+	stmt:  kCONTINUE opt_ident.'。' 
+
+	'。'  shift 92
+	.  error
+
+
+state 51
+	stmt:  kTRY block.kCATCH '（' tIDENT '）' block 
+	stmt:  kTRY block.kFINALLY block 
+	stmt:  kTRY block.kCATCH '（' tIDENT '）' block kFINALLY block 
+
+	kCATCH  shift 93
+	kFINALLY  shift 94
+	.  error
+
+
+state 52
+	block:  block_beg.'】' 
+	block:  block_beg.stmts '】' 
+	opt_label: .    (37)
+
+	kIF  shift 7
+	kRETURN  shift 9
+	kBREAK  shift 10
+	kCONTINUE  shift 11
+	kTRUE  shift 29
+	kFALSE  shift 30
+	kTRY  shift 12
+	kTHROW  shift 13
+	kBOOLEAN  shift 14
+	kINT  shift 15
+	kDOUBLE  shift 16
+	kSTRING  shift 17
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 19
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	'】'  shift 95
+	.  reduce 37 (src line 216)
+
+	stmt  goto 97
+	expr  goto 6
+	assign  goto 18
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+	stmts  goto 96
+	opt_label  goto 8
+	type_spec  goto 98
+
+state 53
+	block_beg:  '【'.    (15)
+
+	.  reduce 15 (src line 123)
+
+
+state 54
+	stmt:  kTHROW expr.'。' 
+	expr:  expr.'，' assign 
+
+	'。'  shift 99
+	'，'  shift 40
+	.  error
+
+
+state 55
+	opt_label:  tIDENT '：'.    (38)
+
+	.  reduce 38 (src line 220)
+
+
+state 56
+	log_or:  log_or tLOG_OR.log_and 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	log_and  goto 100
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 80
+	primary  goto 23
+
+state 57
+	assign:  postfix tIS.assign 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	assign  goto 101
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 58
+	assign:  postfix tADD_A.assign 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	assign  goto 102
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 59
+	assign:  postfix tSUB_A.assign 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	assign  goto 103
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 60
+	assign:  postfix tMUL_A.assign 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	assign  goto 104
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 61
+	assign:  postfix tDIV_A.assign 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	assign  goto 105
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 62
+	assign:  postfix tMOD_A.assign 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	assign  goto 106
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 63
+	postfix:  postfix '（'.'）' 
+	postfix:  postfix '（'.args '）' 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	'）'  shift 107
+	.  error
+
+	assign  goto 109
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+	args  goto 108
+
+state 64
+	postfix:  postfix tINC.    (77)
+
+	.  reduce 77 (src line 355)
+
+
+state 65
+	postfix:  postfix tDEC.    (78)
+
+	.  reduce 78 (src line 359)
+
+
+state 66
+	log_and:  log_and tLOG_AND.equality 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	equality  goto 110
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 80
+	primary  goto 23
+
+state 67
+	equality:  equality tEQ.relational 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	relational  goto 111
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 80
+	primary  goto 23
+
+state 68
+	equality:  equality tNE.relational 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	relational  goto 112
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 80
+	primary  goto 23
+
+state 69
+	expr:  expr.'，' assign 
+	primary:  '（' expr.'）' 
+
+	'，'  shift 40
+	'）'  shift 113
+	.  error
+
+
+state 70
+	relational:  relational '《'.additive 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	additive  goto 114
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 80
+	primary  goto 23
+
+state 71
+	relational:  relational '》'.additive 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	additive  goto 115
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 80
+	primary  goto 23
+
+state 72
+	relational:  relational tGE.additive 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	additive  goto 116
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 80
+	primary  goto 23
+
+state 73
+	relational:  relational tLE.additive 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	additive  goto 117
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 80
+	primary  goto 23
+
+state 74
+	additive:  additive '+'.multive 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	multive  goto 118
+	unary  goto 34
+	postfix  goto 80
+	primary  goto 23
+
+state 75
+	additive:  additive '-'.multive 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	multive  goto 119
+	unary  goto 34
+	postfix  goto 80
+	primary  goto 23
+
+state 76
+	multive:  multive '*'.unary 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	unary  goto 120
+	postfix  goto 80
+	primary  goto 23
+
+state 77
+	multive:  multive '/'.unary 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	unary  goto 121
+	postfix  goto 80
+	primary  goto 23
+
+state 78
+	multive:  multive '%'.unary 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	unary  goto 122
+	postfix  goto 80
+	primary  goto 23
+
+state 79
+	unary:  '-' unary.    (72)
+
+	.  reduce 72 (src line 337)
+
+
+state 80
+	unary:  postfix.    (71)
+	postfix:  postfix.'（' '）' 
+	postfix:  postfix.'（' args '）' 
+	postfix:  postfix.tINC 
+	postfix:  postfix.tDEC 
+
+	tINC  shift 64
+	tDEC  shift 65
+	'（'  shift 63
+	.  reduce 71 (src line 336)
+
+
+state 81
+	unary:  '！' unary.    (73)
+
+	.  reduce 73 (src line 341)
+
+
+state 82
+	def_func:  type_spec tIDENT '（'.params '）' block 
+	def_func:  type_spec tIDENT '（'.'）' block 
+	def_func:  type_spec tIDENT '（'.params '）' '。' 
+	def_func:  type_spec tIDENT '（'.'）' '。' 
+
+	kBOOLEAN  shift 14
+	kINT  shift 15
+	kDOUBLE  shift 16
+	kSTRING  shift 17
+	'）'  shift 124
+	.  error
+
+	params  goto 123
+	type_spec  goto 125
+
+state 83
+	stmt:  type_spec tIDENT '。'.    (21)
+
+	.  reduce 21 (src line 150)
+
+
+state 84
+	stmt:  type_spec tIDENT tIS.expr '。' 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	expr  goto 126
+	assign  goto 18
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 85
+	expr:  expr '，' assign.    (44)
+
+	.  reduce 44 (src line 241)
+
+
+state 86
+	stmt:  kIF '（' expr.'）' block if_tail 
+	expr:  expr.'，' assign 
+
+	'，'  shift 40
+	'）'  shift 127
+	.  error
+
+
+state 87
+	stmt:  opt_label kWHILE '（'.expr '）' block 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	expr  goto 128
+	assign  goto 18
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 88
+	stmt:  opt_label kFOR '（'.opt_expr '；' opt_expr '；' opt_expr '）' block 
+	opt_expr: .    (39)
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  reduce 39 (src line 225)
+
+	opt_expr  goto 129
+	expr  goto 46
+	assign  goto 18
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 89
+	stmt:  opt_label kFOREACH '（'.tIDENT '：' expr '）' block 
+
+	tIDENT  shift 130
+	.  error
+
+
+state 90
+	stmt:  kRETURN opt_expr '。'.    (27)
+
+	.  reduce 27 (src line 174)
+
+
+state 91
+	stmt:  kBREAK opt_ident '。'.    (28)
+
+	.  reduce 28 (src line 178)
+
+
+state 92
+	stmt:  kCONTINUE opt_ident '。'.    (29)
+
+	.  reduce 29 (src line 182)
+
+
+state 93
+	stmt:  kTRY block kCATCH.'（' tIDENT '）' block 
+	stmt:  kTRY block kCATCH.'（' tIDENT '）' block kFINALLY block 
+
+	'（'  shift 131
+	.  error
+
+
+state 94
+	stmt:  kTRY block kFINALLY.block 
+
+	'【'  shift 53
+	.  error
+
+	block_beg  goto 52
+	block  goto 132
+
+state 95
+	block:  block_beg '】'.    (16)
+
+	.  reduce 16 (src line 128)
+
+
+state 96
+	block:  block_beg stmts.'】' 
+	stmts:  stmts.stmt 
+	opt_label: .    (37)
+
+	kIF  shift 7
+	kRETURN  shift 9
+	kBREAK  shift 10
+	kCONTINUE  shift 11
+	kTRUE  shift 29
+	kFALSE  shift 30
+	kTRY  shift 12
+	kTHROW  shift 13
+	kBOOLEAN  shift 14
+	kINT  shift 15
+	kDOUBLE  shift 16
+	kSTRING  shift 17
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 19
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	'】'  shift 133
+	.  reduce 37 (src line 216)
+
+	stmt  goto 134
+	expr  goto 6
+	assign  goto 18
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+	opt_label  goto 8
+	type_spec  goto 98
+
+state 97
+	stmts:  stmt.    (18)
+
+	.  reduce 18 (src line 137)
+
+
+state 98
+	stmt:  type_spec.tIDENT '。' 
+	stmt:  type_spec.tIDENT tIS expr '。' 
+
+	tIDENT  shift 135
+	.  error
+
+
+state 99
+	stmt:  kTHROW expr '。'.    (33)
+
+	.  reduce 33 (src line 198)
+
+
+state 100
+	log_or:  log_or tLOG_OR log_and.    (53)
+	log_and:  log_and.tLOG_AND equality 
+
+	tLOG_AND  shift 66
+	.  reduce 53 (src line 273)
+
+
+state 101
+	assign:  postfix tIS assign.    (46)
+
+	.  reduce 46 (src line 247)
+
+
+state 102
+	assign:  postfix tADD_A assign.    (47)
+
+	.  reduce 47 (src line 251)
+
+
+state 103
+	assign:  postfix tSUB_A assign.    (48)
+
+	.  reduce 48 (src line 255)
+
+
+state 104
+	assign:  postfix tMUL_A assign.    (49)
+
+	.  reduce 49 (src line 259)
+
+
+state 105
+	assign:  postfix tDIV_A assign.    (50)
+
+	.  reduce 50 (src line 263)
+
+
+state 106
+	assign:  postfix tMOD_A assign.    (51)
+
+	.  reduce 51 (src line 267)
+
+
+state 107
+	postfix:  postfix '（' '）'.    (75)
+
+	.  reduce 75 (src line 347)
+
+
+state 108
+	postfix:  postfix '（' args.'）' 
+	args:  args.'，' assign 
+
+	'，'  shift 137
+	'）'  shift 136
+	.  error
+
+
+state 109
+	args:  assign.    (86)
+
+	.  reduce 86 (src line 393)
+
+
+state 110
+	log_and:  log_and tLOG_AND equality.    (55)
+	equality:  equality.tEQ relational 
+	equality:  equality.tNE relational 
+
+	tEQ  shift 67
+	tNE  shift 68
+	.  reduce 55 (src line 279)
+
+
+state 111
+	equality:  equality tEQ relational.    (57)
+	relational:  relational.'《' additive 
+	relational:  relational.'》' additive 
+	relational:  relational.tGE additive 
+	relational:  relational.tLE additive 
+
+	tGE  shift 72
+	tLE  shift 73
+	'《'  shift 70
+	'》'  shift 71
+	.  reduce 57 (src line 285)
+
+
+state 112
+	equality:  equality tNE relational.    (58)
+	relational:  relational.'《' additive 
+	relational:  relational.'》' additive 
+	relational:  relational.tGE additive 
+	relational:  relational.tLE additive 
+
+	tGE  shift 72
+	tLE  shift 73
+	'《'  shift 70
+	'》'  shift 71
+	.  reduce 58 (src line 289)
+
+
+state 113
+	primary:  '（' expr '）'.    (79)
+
+	.  reduce 79 (src line 364)
+
+
+state 114
+	relational:  relational '《' additive.    (60)
+	additive:  additive.'+' multive 
+	additive:  additive.'-' multive 
+
+	'+'  shift 74
+	'-'  shift 75
+	.  reduce 60 (src line 295)
+
+
+state 115
+	relational:  relational '》' additive.    (61)
+	additive:  additive.'+' multive 
+	additive:  additive.'-' multive 
+
+	'+'  shift 74
+	'-'  shift 75
+	.  reduce 61 (src line 299)
+
+
+state 116
+	relational:  relational tGE additive.    (62)
+	additive:  additive.'+' multive 
+	additive:  additive.'-' multive 
+
+	'+'  shift 74
+	'-'  shift 75
+	.  reduce 62 (src line 303)
+
+
+state 117
+	relational:  relational tLE additive.    (63)
+	additive:  additive.'+' multive 
+	additive:  additive.'-' multive 
+
+	'+'  shift 74
+	'-'  shift 75
+	.  reduce 63 (src line 307)
+
+
+state 118
+	additive:  additive '+' multive.    (65)
+	multive:  multive.'*' unary 
+	multive:  multive.'/' unary 
+	multive:  multive.'%' unary 
+
+	'*'  shift 76
+	'/'  shift 77
+	'%'  shift 78
+	.  reduce 65 (src line 313)
+
+
+state 119
+	additive:  additive '-' multive.    (66)
+	multive:  multive.'*' unary 
+	multive:  multive.'/' unary 
+	multive:  multive.'%' unary 
+
+	'*'  shift 76
+	'/'  shift 77
+	'%'  shift 78
+	.  reduce 66 (src line 317)
+
+
+state 120
+	multive:  multive '*' unary.    (68)
+
+	.  reduce 68 (src line 323)
+
+
+state 121
+	multive:  multive '/' unary.    (69)
+
+	.  reduce 69 (src line 327)
+
+
+state 122
+	multive:  multive '%' unary.    (70)
+
+	.  reduce 70 (src line 331)
+
+
+state 123
+	def_func:  type_spec tIDENT '（' params.'）' block 
+	def_func:  type_spec tIDENT '（' params.'）' '。' 
+	params:  params.'，' type_spec tIDENT 
+
+	'，'  shift 139
+	'）'  shift 138
+	.  error
+
+
+state 124
+	def_func:  type_spec tIDENT '（' '）'.block 
+	def_func:  type_spec tIDENT '（' '）'.'。' 
+
+	'【'  shift 53
+	'。'  shift 141
+	.  error
+
+	block_beg  goto 52
+	block  goto 140
+
+state 125
+	params:  type_spec.tIDENT 
+
+	tIDENT  shift 142
+	.  error
+
+
+state 126
+	stmt:  type_spec tIDENT tIS expr.'。' 
+	expr:  expr.'，' assign 
+
+	'。'  shift 143
+	'，'  shift 40
+	.  error
+
+
+state 127
+	stmt:  kIF '（' expr '）'.block if_tail 
+
+	'【'  shift 53
+	.  error
+
+	block_beg  goto 52
+	block  goto 144
+
+state 128
+	stmt:  opt_label kWHILE '（' expr.'）' block 
+	expr:  expr.'，' assign 
+
+	'，'  shift 40
+	'）'  shift 145
+	.  error
+
+
+state 129
+	stmt:  opt_label kFOR '（' opt_expr.'；' opt_expr '；' opt_expr '）' block 
+
+	'；'  shift 146
+	.  error
+
+
+state 130
+	stmt:  opt_label kFOREACH '（' tIDENT.'：' expr '）' block 
+
+	'：'  shift 147
+	.  error
+
+
+state 131
+	stmt:  kTRY block kCATCH '（'.tIDENT '）' block 
+	stmt:  kTRY block kCATCH '（'.tIDENT '）' block kFINALLY block 
+
+	tIDENT  shift 148
+	.  error
+
+
+state 132
+	stmt:  kTRY block kFINALLY block.    (31)
+
+	.  reduce 31 (src line 190)
+
+
+state 133
+	block:  block_beg stmts '】'.    (17)
+
+	.  reduce 17 (src line 132)
+
+
+state 134
+	stmts:  stmts stmt.    (19)
+
+	.  reduce 19 (src line 141)
+
+
+state 135
+	stmt:  type_spec tIDENT.'。' 
+	stmt:  type_spec tIDENT.tIS expr '。' 
+
+	tIS  shift 84
+	'。'  shift 83
+	.  error
+
+
+state 136
+	postfix:  postfix '（' args '）'.    (76)
+
+	.  reduce 76 (src line 351)
+
+
+state 137
+	args:  args '，'.assign 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	assign  goto 149
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 138
+	def_func:  type_spec tIDENT '（' params '）'.block 
+	def_func:  type_spec tIDENT '（' params '）'.'。' 
+
+	'【'  shift 53
+	'。'  shift 151
+	.  error
+
+	block_beg  goto 52
+	block  goto 150
+
+state 139
+	params:  params '，'.type_spec tIDENT 
+
+	kBOOLEAN  shift 14
+	kINT  shift 15
+	kDOUBLE  shift 16
+	kSTRING  shift 17
+	.  error
+
+	type_spec  goto 152
+
+state 140
+	def_func:  type_spec tIDENT '（' '）' block.    (10)
+
+	.  reduce 10 (src line 101)
+
+
+state 141
+	def_func:  type_spec tIDENT '（' '）' '。'.    (12)
+
+	.  reduce 12 (src line 109)
+
+
+state 142
+	params:  type_spec tIDENT.    (13)
+
+	.  reduce 13 (src line 114)
+
+
+state 143
+	stmt:  type_spec tIDENT tIS expr '。'.    (22)
+
+	.  reduce 22 (src line 154)
+
+
+state 144
+	stmt:  kIF '（' expr '）' block.if_tail 
+	if_tail: .    (34)
+
+	kELSE  shift 154
+	kELSIF  shift 155
+	.  reduce 34 (src line 203)
+
+	if_tail  goto 153
+
+state 145
+	stmt:  opt_label kWHILE '（' expr '）'.block 
+
+	'【'  shift 53
+	.  error
+
+	block_beg  goto 52
+	block  goto 156
+
+state 146
+	stmt:  opt_label kFOR '（' opt_expr '；'.opt_expr '；' opt_expr '）' block 
+	opt_expr: .    (39)
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  reduce 39 (src line 225)
+
+	opt_expr  goto 157
+	expr  goto 46
+	assign  goto 18
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 147
+	stmt:  opt_label kFOREACH '（' tIDENT '：'.expr '）' block 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	expr  goto 158
+	assign  goto 18
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 148
+	stmt:  kTRY block kCATCH '（' tIDENT.'）' block 
+	stmt:  kTRY block kCATCH '（' tIDENT.'）' block kFINALLY block 
+
+	'）'  shift 159
+	.  error
+
+
+state 149
+	args:  args '，' assign.    (87)
+
+	.  reduce 87 (src line 397)
+
+
+state 150
+	def_func:  type_spec tIDENT '（' params '）' block.    (9)
+
+	.  reduce 9 (src line 97)
+
+
+state 151
+	def_func:  type_spec tIDENT '（' params '）' '。'.    (11)
+
+	.  reduce 11 (src line 105)
+
+
+state 152
+	params:  params '，' type_spec.tIDENT 
+
+	tIDENT  shift 160
+	.  error
+
+
+state 153
+	stmt:  kIF '（' expr '）' block if_tail.    (23)
+
+	.  reduce 23 (src line 158)
+
+
+state 154
+	if_tail:  kELSE.block 
+
+	'【'  shift 53
+	.  error
+
+	block_beg  goto 52
+	block  goto 161
+
+state 155
+	if_tail:  kELSIF.'（' expr '）' block if_tail 
+
+	'（'  shift 162
+	.  error
+
+
+state 156
+	stmt:  opt_label kWHILE '（' expr '）' block.    (24)
+
+	.  reduce 24 (src line 162)
+
+
+state 157
+	stmt:  opt_label kFOR '（' opt_expr '；' opt_expr.'；' opt_expr '）' block 
+
+	'；'  shift 163
+	.  error
+
+
+state 158
+	stmt:  opt_label kFOREACH '（' tIDENT '：' expr.'）' block 
+	expr:  expr.'，' assign 
+
+	'，'  shift 40
+	'）'  shift 164
+	.  error
+
+
+state 159
+	stmt:  kTRY block kCATCH '（' tIDENT '）'.block 
+	stmt:  kTRY block kCATCH '（' tIDENT '）'.block kFINALLY block 
+
+	'【'  shift 53
+	.  error
+
+	block_beg  goto 52
+	block  goto 165
+
+state 160
+	params:  params '，' type_spec tIDENT.    (14)
+
+	.  reduce 14 (src line 118)
+
+
+state 161
+	if_tail:  kELSE block.    (35)
+
+	.  reduce 35 (src line 207)
+
+
+state 162
+	if_tail:  kELSIF '（'.expr '）' block if_tail 
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  error
+
+	expr  goto 166
+	assign  goto 18
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 163
+	stmt:  opt_label kFOR '（' opt_expr '；' opt_expr '；'.opt_expr '）' block 
+	opt_expr: .    (39)
+
+	kTRUE  shift 29
+	kFALSE  shift 30
+	tINT_LITERAL  shift 26
+	tDOUBLE_LITERAL  shift 27
+	tSTRING_LITERAL  shift 28
+	tIDENT  shift 47
+	'-'  shift 35
+	'！'  shift 36
+	'（'  shift 25
+	.  reduce 39 (src line 225)
+
+	opt_expr  goto 167
+	expr  goto 46
+	assign  goto 18
+	log_or  goto 20
+	log_and  goto 22
+	equality  goto 24
+	relational  goto 31
+	additive  goto 32
+	multive  goto 33
+	unary  goto 34
+	postfix  goto 21
+	primary  goto 23
+
+state 164
+	stmt:  opt_label kFOREACH '（' tIDENT '：' expr '）'.block 
+
+	'【'  shift 53
+	.  error
+
+	block_beg  goto 52
+	block  goto 168
+
+state 165
+	stmt:  kTRY block kCATCH '（' tIDENT '）' block.    (30)
+	stmt:  kTRY block kCATCH '（' tIDENT '）' block.kFINALLY block 
+
+	kFINALLY  shift 169
+	.  reduce 30 (src line 186)
+
+
+state 166
+	if_tail:  kELSIF '（' expr.'）' block if_tail 
+	expr:  expr.'，' assign 
+
+	'，'  shift 40
+	'）'  shift 170
+	.  error
+
+
+state 167
+	stmt:  opt_label kFOR '（' opt_expr '；' opt_expr '；' opt_expr.'）' block 
+
+	'）'  shift 171
+	.  error
+
+
+state 168
+	stmt:  opt_label kFOREACH '（' tIDENT '：' expr '）' block.    (26)
+
+	.  reduce 26 (src line 170)
+
+
+state 169
+	stmt:  kTRY block kCATCH '（' tIDENT '）' block kFINALLY.block 
+
+	'【'  shift 53
+	.  error
+
+	block_beg  goto 52
+	block  goto 172
+
+state 170
+	if_tail:  kELSIF '（' expr '）'.block if_tail 
+
+	'【'  shift 53
+	.  error
+
+	block_beg  goto 52
+	block  goto 173
+
+state 171
+	stmt:  opt_label kFOR '（' opt_expr '；' opt_expr '；' opt_expr '）'.block 
+
+	'【'  shift 53
+	.  error
+
+	block_beg  goto 52
+	block  goto 174
+
+state 172
+	stmt:  kTRY block kCATCH '（' tIDENT '）' block kFINALLY block.    (32)
+
+	.  reduce 32 (src line 194)
+
+
+state 173
+	if_tail:  kELSIF '（' expr '）' block.if_tail 
+	if_tail: .    (34)
+
+	kELSE  shift 154
+	kELSIF  shift 155
+	.  reduce 34 (src line 203)
+
+	if_tail  goto 175
+
+state 174
+	stmt:  opt_label kFOR '（' opt_expr '；' opt_expr '；' opt_expr '）' block.    (25)
+
+	.  reduce 25 (src line 166)
+
+
+state 175
+	if_tail:  kELSIF '（' expr '）' block if_tail.    (36)
+
+	.  reduce 36 (src line 211)
+
+
+85 terminals, 26 nonterminals
+88 grammar rules, 176/8000 states
+0 shift/reduce, 0 reduce/reduce conflicts reported
+75 working sets used
+memory: parser 381/120000
+146 extra closures
+526 shift entries, 1 exceptions
+98 goto entries
+281 entries saved by goto default
+Optimizer space used: output 284/120000
+284 table entries, 13 zero
+maximum spread: 85, maximum offset: 173
