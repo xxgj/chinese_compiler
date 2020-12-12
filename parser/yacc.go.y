@@ -52,7 +52,7 @@ func closeBlock(l yyLexer, block ast.Node, stmts []ast.Node) ast.Node {
 %}
 
 %union {
-	token    *Token
+	token     *Token
 	ident     string
 	node      ast.Node
 	nodes     []ast.Node
@@ -64,14 +64,14 @@ func closeBlock(l yyLexer, block ast.Node, stmts []ast.Node) ast.Node {
               kTHROW kTHROWS kBOOLEAN kVOID kINT kDOUBLE kSTRING kNATIVE_POINTER
               kNEW kREQUIRE kRENAME kCLASS kINTERFACE kPUBLIC kPRIVATE kVIRTUAL
               kOVERRIDE kABSTRACT kTHIS kSUPER kCONSTRUCTOR kINSTANCEOF
-              kDELEGATE kENUM kFINAL kCONST tIS tEQ tNE tGE tLE tADD_A tSUB_A
+              kDELEGATE kENUM kFINAL kCONST tIS tEQ tNE tGE tLE tG tL tADD_A tSUB_A
               tMUL_A tDIV_A tMOD_A tINC tDEC tDCAST_BEG tDCAST_END tLOG_AND tLOG_OR
               tINT_LITERAL tDOUBLE_LITERAL tSTRING_LITERAL tREGEXP_LITERAL tIDENT
 
 %type<node>  stmt block_beg block if_tail opt_expr expr assign log_or log_and
              equality relational additive multive unary postfix primary
 %type<nodes> stmts params args
-%type<token> '【' '。' '，' '《' '》' '+' '-' '*' '/' '%' '！' '（'
+%type<token> '【' '】' '。' '，' '；' '+' '-' '*' '/' '%' '！' '（' '（'
 %type<ident> opt_label opt_ident
 %type<typeSpec> type_spec
 
@@ -292,11 +292,11 @@ equality : relational
     }
 
 relational : additive
-           | relational '《' additive
+           | relational tL additive
     {
         $$ = ast.NewBinary($2, ast.GT, $1, $3)
     }
-           | relational '》' additive
+           | relational tG additive
     {
         $$ = ast.NewBinary($2, ast.LT, $1, $3)
     }

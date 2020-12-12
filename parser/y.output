@@ -379,15 +379,15 @@ state 30
 
 state 31
 	equality:  relational.    (56)
-	relational:  relational.'《' additive 
-	relational:  relational.'》' additive 
+	relational:  relational.tL additive 
+	relational:  relational.tG additive 
 	relational:  relational.tGE additive 
 	relational:  relational.tLE additive 
 
 	tGE  shift 72
 	tLE  shift 73
-	'《'  shift 70
-	'》'  shift 71
+	tG  shift 71
+	tL  shift 70
 	.  reduce 56 (src line 284)
 
 
@@ -625,10 +625,10 @@ state 52
 	tDOUBLE_LITERAL  shift 27
 	tSTRING_LITERAL  shift 28
 	tIDENT  shift 19
+	'】'  shift 95
 	'-'  shift 35
 	'！'  shift 36
 	'（'  shift 25
-	'】'  shift 95
 	.  reduce 37 (src line 216)
 
 	stmt  goto 97
@@ -955,7 +955,7 @@ state 69
 
 
 state 70
-	relational:  relational '《'.additive 
+	relational:  relational tL.additive 
 
 	kTRUE  shift 29
 	kFALSE  shift 30
@@ -975,7 +975,7 @@ state 70
 	primary  goto 23
 
 state 71
-	relational:  relational '》'.additive 
+	relational:  relational tG.additive 
 
 	kTRUE  shift 29
 	kFALSE  shift 30
@@ -1337,10 +1337,10 @@ state 96
 	tDOUBLE_LITERAL  shift 27
 	tSTRING_LITERAL  shift 28
 	tIDENT  shift 19
+	'】'  shift 133
 	'-'  shift 35
 	'！'  shift 36
 	'（'  shift 25
-	'】'  shift 133
 	.  reduce 37 (src line 216)
 
 	stmt  goto 134
@@ -1455,29 +1455,29 @@ state 110
 
 state 111
 	equality:  equality tEQ relational.    (57)
-	relational:  relational.'《' additive 
-	relational:  relational.'》' additive 
+	relational:  relational.tL additive 
+	relational:  relational.tG additive 
 	relational:  relational.tGE additive 
 	relational:  relational.tLE additive 
 
 	tGE  shift 72
 	tLE  shift 73
-	'《'  shift 70
-	'》'  shift 71
+	tG  shift 71
+	tL  shift 70
 	.  reduce 57 (src line 285)
 
 
 state 112
 	equality:  equality tNE relational.    (58)
-	relational:  relational.'《' additive 
-	relational:  relational.'》' additive 
+	relational:  relational.tL additive 
+	relational:  relational.tG additive 
 	relational:  relational.tGE additive 
 	relational:  relational.tLE additive 
 
 	tGE  shift 72
 	tLE  shift 73
-	'《'  shift 70
-	'》'  shift 71
+	tG  shift 71
+	tL  shift 70
 	.  reduce 58 (src line 289)
 
 
@@ -1488,7 +1488,7 @@ state 113
 
 
 state 114
-	relational:  relational '《' additive.    (60)
+	relational:  relational tL additive.    (60)
 	additive:  additive.'+' multive 
 	additive:  additive.'-' multive 
 
@@ -1498,7 +1498,7 @@ state 114
 
 
 state 115
-	relational:  relational '》' additive.    (61)
+	relational:  relational tG additive.    (61)
 	additive:  additive.'+' multive 
 	additive:  additive.'-' multive 
 
@@ -2079,6 +2079,6 @@ memory: parser 381/120000
 526 shift entries, 1 exceptions
 98 goto entries
 281 entries saved by goto default
-Optimizer space used: output 284/120000
-284 table entries, 13 zero
+Optimizer space used: output 283/120000
+283 table entries, 12 zero
 maximum spread: 85, maximum offset: 173
