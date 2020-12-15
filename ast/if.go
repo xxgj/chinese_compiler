@@ -5,10 +5,10 @@ import (
 )
 
 type If struct {
-	nodeBase
-	Test Node
-	Body Node
-	Alt  Node
+	nodeBase      //行列信息
+	Test     Node //条件
+	Body     Node //执行块
+	Alt      Node //后续如else等
 }
 
 func NewIf(pos PositionHolder, test Node, body Node, alt Node) *If {
