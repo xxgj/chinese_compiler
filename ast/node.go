@@ -46,7 +46,7 @@ func indent(w io.Writer, nest int) {
 
 func header(n Node, w io.Writer, nest int, requireNewline bool) {
 	indent(w, nest)
-	_, _ = fmt.Fprintf(w, "「第%d行｜第%d列」 -> %T: ", n.Line(), n.Column(), n)
+	_, _ = fmt.Fprintf(w, "「第 %d 行｜第 %d 列」 -> %T: ", n.Line(), n.Column(), n)
 	if requireNewline {
 		_, _ = fmt.Fprint(w, "\n")
 	}

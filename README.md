@@ -3,7 +3,7 @@ A toy compiler for chinese language.
 
 ## Build
 
-Compilation requires Go 1.13+
+**Notice**: Compilation requires Go 1.13+
 
 `go build -o compiler ./main/parser.go`
 
@@ -39,57 +39,49 @@ Some examples can be found in folder `example`.
 ### AST Output
 
 ```
-「第1行｜第5列」 -> *ast.Block: 
-    「第1行｜第5列」 -> *ast.Decl:
-    「第2行｜第12列」 -> *ast.ExprStmt:
-        「第2行｜第3列」 -> *ast.assign: 常规赋值
+「第 1 行｜第 3 列」 -> *ast.Block: 
+    「第 1 行｜第 3 列」 -> *ast.Decl:
+    「第 2 行｜第 3 列」 -> *ast.Decl:
+    「第 3 行｜第 11 列」 -> *ast.ExprStmt:
+        「第 3 行｜第 5 列」 -> *ast.assign: 常规赋值
             #左值:
-                「第2行｜第0列」 -> *ast.IdentExpr: 今天
+                「第 3 行｜第 0 列」 -> *ast.IdentExpr: 建校年份
             #右值:
-                「第2行｜第10列」 -> *ast.Funcall:
-                    #函数:
-                        「第2行｜第5列」 -> *ast.IdentExpr: 今天星期几
-                    #参数:
-                        (nil)
-    「第3行｜第0列」 -> *ast.If:
-        #条件:
-            「第3行｜第6列」 -> *ast.Binary: 相等
+                「第 3 行｜第 7 列」 -> *ast.IntLiteral: 1952
+    「第 4 行｜第 6 列」 -> *ast.ExprStmt:
+        「第 4 行｜第 3 列」 -> *ast.assign: 常规赋值
+            #左值:
+                「第 4 行｜第 0 列」 -> *ast.IdentExpr: 校龄
+            #右值:
+                「第 4 行｜第 5 列」 -> *ast.IntLiteral: 0
+    「第 5 行｜第 0 列」 -> *ast.For:
+        #初始化:
+            「第 5 行｜第 6 列」 -> *ast.assign: 常规赋值
                 #左值:
-                    「第3行｜第3列」 -> *ast.IdentExpr: 今天
+                    「第 5 行｜第 3 列」 -> *ast.IdentExpr: 今年
                 #右值:
-                    「第3行｜第9列」 -> *ast.StrLiteral: 星期一
-        #执行块:
-            「第3行｜第15列」 -> *ast.Block:
-                「第4行｜第13列」 -> *ast.ExprStmt:
-                    「第4行｜第11列」 -> *ast.Funcall:
-                        #函数:
-                            「第4行｜第1列」 -> *ast.IdentExpr: 上程序设计语言原理课
-                        #参数:
-                            (nil)
-        #后续:
-            「第5行｜第1列」 -> *ast.If:
-                #条件:
-                    「第5行｜第9列」 -> *ast.Binary: 相等
+                    「第 5 行｜第 8 列」 -> *ast.IntLiteral: 1952
+        #条件:
+            「第 5 行｜第 16 列」 -> *ast.Binary: 小于等于
+                #左值:
+                    「第 5 行｜第 13 列」 -> *ast.IdentExpr: 今年
+                #右值:
+                    「第 5 行｜第 21 列」 -> *ast.IntLiteral: 2020
+        #步长:
+            「第 5 行｜第 30 列」 -> *ast.IncDec: 加一
+                「第 5 行｜第 27 列」 -> *ast.IdentExpr: 今年
+        #循环体:
+            「第 5 行｜第 34 列」 -> *ast.Block:
+                「第 6 行｜第 12 列」 -> *ast.ExprStmt:
+                    「第 6 行｜第 4 列」 -> *ast.assign: 常规赋值
                         #左值:
-                            「第5行｜第6列」 -> *ast.IdentExpr: 今天
+                            「第 6 行｜第 1 列」 -> *ast.IdentExpr: 校龄
                         #右值:
-                            「第5行｜第12列」 -> *ast.StrLiteral: 星期日
-                #执行块:
-                    「第5行｜第18列」 -> *ast.Block:
-                        「第6行｜第14列」 -> *ast.ExprStmt:
-                            「第6行｜第12列」 -> *ast.Funcall:
-                                #函数:
-                                    「第6行｜第1列」 -> *ast.IdentExpr: 写程序语言设计原理作业
-                                #参数:
-                                    (nil)
-                #后续:
-                    「第7行｜第3列」 -> *ast.Block:
-                        「第8行｜第8列」 -> *ast.ExprStmt:
-                            「第8行｜第6列」 -> *ast.Funcall: 
-                                #函数:
-                                    「第8行｜第1列」 -> *ast.IdentExpr: 干别的事情
-                                #参数:
-                                    (nil)
+                            「第 6 行｜第 9 列」 -> *ast.Binary: 加
+                                #左值:
+                                    「第 6 行｜第 6 列」 -> *ast.IdentExpr: 校龄
+                                #右值:
+                                    「第 6 行｜第 11 列」 -> *ast.IntLiteral: 1
 
 ```
 
