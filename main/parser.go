@@ -11,9 +11,10 @@ import (
 	"github.com/kevinchen147/chinese_compiler/parser"
 )
 
-var flagIn string
-var flagOut string
-var flagLine int
+var (
+	flagIn, flagOut string
+	flagLine        int
+)
 
 func init() {
 	flag.StringVar(&flagIn, "in", "code.txt", "指定输入的代码文件路径")
@@ -36,7 +37,6 @@ func main() {
 		}
 		os.Stdout = f
 	}
-
 	p := parser.NewParser(strings.NewReader(string(code)), flagIn, flagLine)
 	err = p.Parse()
 	if err != nil {
