@@ -7,8 +7,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/kevinchen147/chinese_compiler/ast"
-	"github.com/kevinchen147/chinese_compiler/parser"
+	"github.com/xxgj/chinese_compiler/ast"
+	"github.com/xxgj/chinese_compiler/parser"
 )
 
 var (

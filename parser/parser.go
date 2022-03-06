@@ -10,7 +10,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/kevinchen147/chinese_compiler/ast"
+	"github.com/xxgj/chinese_compiler/ast"
 )
 
 type Token struct {

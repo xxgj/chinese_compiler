@@ -9,7 +9,7 @@ import __yyfmt__ "fmt"
 
 import (
 	"fmt"
-	"github.com/kevinchen147/chinese_compiler/ast"
+	"github.com/xxgj/chinese_compiler/ast"
 )
 
 func tokName(c int) string {

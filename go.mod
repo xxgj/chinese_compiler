@@ -1,3 +1,3 @@
-module github.com/kevinchen147/chinese_compiler
+module github.com/xxgj/chinese_compiler
 
 go 1.15
